@@ -1,0 +1,11 @@
+name: ModelWorkshop
+main: bedrockblock\ModelWorkshop\Loader
+api: 4.0.0
+version: 1.0.0
+author: bedrockblock
+
+permissions:
+  workshop.cmd:
+    default: op
+  workshop.edit:
+    default: op
