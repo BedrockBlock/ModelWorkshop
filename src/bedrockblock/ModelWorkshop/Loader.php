@@ -6,6 +6,7 @@ namespace bedrockblock\ModelWorkshop;
 
 use bedrockblock\ModelWorkshop\command\WorkshopCmd;
 use bedrockblock\ModelWorkshop\generator\WorkshopGeneretor;
+use bedrockblock\ModelWorkshop\workshop\WorkshopManager;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\world\generator\GeneratorManager;

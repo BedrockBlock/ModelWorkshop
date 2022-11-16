@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace bedrockblock\ModelWorkshop;
+namespace bedrockblock\ModelWorkshop\workshop;
 
+use bedrockblock\ModelWorkshop\Loader;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
@@ -55,15 +56,12 @@ final class WorkshopManager{
 		return is_dir($path) && isset($this->file->data[$name]);
 	}
 
-	public function createWorkshop(string $name, int $yOffset, int $workshopSize, int $blockSize) : void{
+	public function createWorkshop(string $name, int $yOffset, int $workshopSize, float $blockSize) : void{
 		$this->server->getWorldManager()->generateWorld(self::WORLD_FOLDER . $name, WorldCreationOptions::create()
 			->setSeed($yOffset)
 			->setDifficulty(World::DIFFICULTY_PEACEFUL)
 			->setSpawnPosition(new Vector3(0, $yOffset + 3, 0))
 		);
-		$this->file->data[$name] = [
-			'workshopSize' => $workshopSize,
-			'blockSize' => $blockSize
-		];
+		$this->file->data[$name] = new WorkshopSetting($yOffset, $workshopSize, $blockSize);
 	}
 }
