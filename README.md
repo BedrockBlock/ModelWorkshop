@@ -1,6 +1,6 @@
 # ModelWorkshop
 
-* Create modeling on the server!! *
+*Create modeling on the server!!*
 
 ## Required Virion
 - [EventAttribute](https://github.com/sky-min/EventAttribute)
