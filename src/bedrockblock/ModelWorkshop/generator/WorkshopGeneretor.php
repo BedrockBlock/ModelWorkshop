@@ -10,11 +10,7 @@ use pocketmine\world\ChunkManager;
 use pocketmine\world\format\Chunk;
 use pocketmine\world\generator\Generator;
 
-final class WorkshopGeneretor extends Generator {
-
-	public function __construct(int $seed, string $preset) {
-		parent::__construct($seed, $preset);
-	}
+final class WorkshopGeneretor extends Generator{
 
 	public function generateChunk(ChunkManager $world, int $chunkX, int $chunkZ): void {
 		if($chunkX == 0 && $chunkZ == 0) {
