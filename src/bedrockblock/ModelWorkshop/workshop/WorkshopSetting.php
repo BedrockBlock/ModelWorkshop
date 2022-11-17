@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace bedrockblock\ModelWorkshop\workshop;
 
-final class WorkshopSetting implements \JsonSerializable{
+use JsonSerializable;
+
+final class WorkshopSetting implements JsonSerializable{
 
 	/**
 	 * @template TPivot of list{float, float, float}
-	 * @param TPivot[] $folders
+	 * @param TPivot[]                      $folders
 	 * @phpstan-param array<string, TPivot> $folders
 	 */
 	public function __construct(
@@ -18,6 +20,31 @@ final class WorkshopSetting implements \JsonSerializable{
 		private array $folders = []
 	){}
 
+	/**
+	 * @template TPivot of list{float, float, float}
+	 * @param array $data
+	 * @phpstan-param array{
+	 *     yOffset: int,
+	 *     workshopSize: int,
+	 *     blockSize: float,
+	 *     folders: array<string, TPivot>
+	 * }            $data
+	 * @return WorkshopSetting
+	 */
+	public static function jsonDeserialize(array $data) : self{
+		return new self($data['yOffset'], $data['workshopSize'], $data['blockSize'], $data['folders']);
+	}
+
+	/**
+	 * @template TPivot of list{float, float, float}
+	 * @return array
+	 * @phpstan-return array{
+	 *     yOffset: int,
+	 *     workshopSize: int,
+	 *     blockSize: float,
+	 *     folders: array<string, TPivot>
+	 * }
+	 */
 	public function jsonSerialize() : array{
 		return [
 			'yOffset' => $this->yOffset,
@@ -25,10 +52,6 @@ final class WorkshopSetting implements \JsonSerializable{
 			'blockSize' => $this->blockSize,
 			'folders' => $this->folders
 		];
-	}
-
-	public static function jsonDeserialize(array $data) : self{
-		return new self($data['yOffset'], $data['workshopSize'], $data['blockSize'], $data['folders']);
 	}
 
 	public function getYOffset() : int{
@@ -63,15 +86,21 @@ final class WorkshopSetting implements \JsonSerializable{
 		return $this->folders[$name];
 	}
 
-	/**
-	 * @param float[] $pivot
-	 * @phpstan-param list{float, float, float} $pivot
-	 */
+	/** @param float[] $pivot */
 	public function addFoldee(string $name, array $pivot) : void{
 		$this->folders[$name] = $pivot;
 	}
 
 	public function deleteFolder(string $name) : void{
 		unset($this->folders[$name]);
+	}
+
+	/**
+	 * @template TPivot of list{float, float, float}
+	 * @return TPivot[]
+	 * @phpstan-return array<string, TPivot>
+	 */
+	public function getFolders() : array{
+		return $this->folders;
 	}
 }

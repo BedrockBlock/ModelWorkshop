@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace bedrockblock\ModelWorkshop\workshop;
 
 use bedrockblock\ModelWorkshop\Loader;
+use bedrockblock\ModelWorkshop\task\AsyncRemoveWorld;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
@@ -63,5 +64,15 @@ final class WorkshopManager{
 			->setSpawnPosition(new Vector3(0, $yOffset + 3, 0))
 		);
 		$this->file->data[$name] = new WorkshopSetting($yOffset, $workshopSize, $blockSize);
+	}
+
+	public function removeWorkshop(string $name) : void{
+		$manager = $this->server->getWorldManager();
+		$worldName = self::WORLD_FOLDER . $name;
+		$world = $manager->getWorldByName($worldName);
+		if($world instanceof World){
+			$manager->unloadWorld($world);
+		}
+		$this->server->getAsyncPool()->submitTask(new AsyncRemoveWorld(Path::join($this->worldPath, $worldName)));
 	}
 }
