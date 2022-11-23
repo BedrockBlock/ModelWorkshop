@@ -9,3 +9,5 @@ permissions:
     default: op
   workshop.edit:
     default: op
+  workshop.entity.close:
+    default: op

@@ -14,6 +14,7 @@ use pocketmine\world\WorldCreationOptions;
 use skymin\json\JsonFile;
 use Webmozart\PathUtil\Path;
 
+use function array_keys;
 use function is_dir;
 
 final class WorkshopManager{
@@ -51,6 +52,11 @@ final class WorkshopManager{
 			'bones' => []
 		]
 	];
+
+	/** @return string[] */
+	public function getWorkshopList() : array{
+		return array_keys($this->file->data);
+	}
 
 	public function existsWorkshop(string $name) : bool{
 		$path = Path::join($this->worldPath, self::WORLD_FOLDER . $name);
